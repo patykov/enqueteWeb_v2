@@ -21,7 +21,7 @@ var schema = mongoose.Schema({
 	ordem: {
 		type:Boolean,
 		required: true
-	}
+	},
 	estado: {
 		type: String,
 		required: true
