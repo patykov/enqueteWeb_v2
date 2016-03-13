@@ -1,0 +1,145 @@
+<div class="brand">EnqueteWeb</div>
+    <div class="address-bar">Engenharia de Software - 2015.2 - UFRJ</div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- navbar-brand is hidden on larger screens, but visible when the menu is collapsed -->
+                <a class="navbar-brand" href="index.html">Business Casual</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/usuario">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Atualizar dados
+                            <ul class="dropdown-menu">
+                                <li><a ng-click="formNome()" href="/atualizaDados"> Alterar nome </a></li>
+                                <li><a ng-click="formEmail()" href="/atualizaDados"> Alterar e-mail </a></li>
+                                <li><a ng-click="formSenha()" href="/atualizaDados"> Alterar senha </a></li>
+                            </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gerenciar Enquete
+                            <ul class="dropdown-menu">
+                                <li><a href="#"> Desativar enquete </a></li>
+                                <li><a href="#"> Reativar enquete </a></li>
+                                <li><a href="#"> Cancelar enquete </a></li>
+                                <li><a href="#"> Adicionar imagem</a></li>
+                            </ul>
+                    </li>
+                    <li>
+                        <a href="/criarEnquete">Criar enquete</a>
+                    </li>
+                    <li>            
+                        <a href="/">Logout</a>                    
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="box">
+            <div class="col-lg-6 text-center">
+                <form name="formularioenquete" ng-submit="registraEnquete()">
+                    <div class="form-group">
+                        <label>Título da enquete:</label>
+                        <input class="form-control" name="titulo" type="text" ng-model='novaEnquete.titulo' size='40' required>
+                        <span ng-show="formularioenquete.$submitted && formularioenquete.titulo.$error.required" class="form-control alert-danger">
+                            Titulo obrigatório
+                        </span>     
+                    </div>
+                    <div class="form-group">
+                        <label>Pergunta:</label>                    
+                        <input class="form-control" name="pergunta" type="text" ng-model='novaEnquete.pergunta' size='40' required>
+                        <span ng-show="formularioenquete.$submitted && formularioenquete.pergunta.$error.required" class="form-control alert-danger">
+                            Pergunta obrigatória
+                        </span>     
+                    </div>
+                    <div class="form-group">
+                        <label>Alternativas:</label>
+                        <div ng-repeat="value in alternativas track by $index">
+                            <input class="form-control" type="text" ng-model="$parent.alternativas[$index]" size='40'>
+                        </div>      
+                    </div>                         
+                    <button ng-click="adicionaAlternativa()" class="btn btn-primary">Adicionar alternativa</button>
+                    <button ng-click="removeAlternativa()" class="btn btn-primary">Remover alternativa</button>    
+                    <br><br>        
+                    <div class='form-group'>                           
+                        <label>Duração (dias):</label>                    
+                        <input class="form-control" name="duracao" type="text" ng-model="novaEnquete.duracao" size='40' required>
+                        <span ng-show="formularioenquete.$submitted && formularioenquete.duracao.$error.required" class="form-control alert-danger">
+                            Campo obrigatório
+                        </span>  
+                    </div>
+                    <div class="form-group">
+                        <label>Insira uma url para a imagem:</label>
+                        <input class="form-control" name="imagem" type="text" ng-model='novaEnquete.imagem' size='40'>
+                    </div>
+                    <div class="form-group">                    
+                        <input type="checkbox" name="ordem" ng-model="novaEnquete.ordem" >
+                        <label>Marque se deseja manter a ordem das alternativas</label>
+                    </div>
+                    <br><br>
+                    <button type="submit" class="btn btn-primary">Submeter</button>  
+                    <br><br>                                                  
+                </form>          
+            </div>
+            <div class="col-lg-6 text-center">
+                <div>
+                    <h1>{{novaEnquete.titulo}}</h1>
+                </div>
+                <div ng-if='novaEnquete.titulo'>                
+                    <h2>{{novaEnquete.pergunta}}</h2>
+                </div>
+                <div>
+                    <div ng-repeat="value in alternativas track by $index" ng-if="value">
+                        <div class="input-group">
+                            <spam class="input-group-addon" id="sizing-addon1">
+                                <input type="checkbox" size='40'>
+                            </spam>
+                            <input type="text" value= {{value}} class="form-control">
+                        </div>                        
+                    </div>
+                </div> 
+                <div ng-if='novaEnquete.pergunta'>
+                    <div ng-if='novaEnquete.duracao'>
+                        <h3>Duração(dias)</h3>
+                    </div>
+                    <h3>{{novaEnquete.duracao}}</h3>
+                </div>
+                <div ng-if='novaEnquete.pergunta'>
+                    <img src={{novaEnquete.imagem}}/>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- /.container -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h4><small>UFRJ - Engenharia de Software 2015.2
+                    <br>
+                 <b>Grupo I : </b>Diego Cruz, Patrícia Kovaleski, Victor Cardoso e Vinícius Campos </small></h4>
+            </div>
+        </div>
+    </div>
+</footer>
